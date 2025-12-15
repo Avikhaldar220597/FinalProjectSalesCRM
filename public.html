@@ -70,7 +70,7 @@
 
         /* Header */
         header {
-            padding: 20px 5%;
+            padding: 15px 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -85,21 +85,87 @@
         .brand {
             display: flex;
             flex-direction: column;
+            flex: 0 0 auto;
+            margin-right: 20px;
         }
 
         .brand h1 {
             font-family: 'Playfair Display', serif;
-            font-size: 2rem;
+            font-size: 1.8rem;
             margin: 0;
             color: var(--gold);
             letter-spacing: 1px;
         }
 
         .brand span {
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             color: rgba(255, 255, 255, 0.7);
             letter-spacing: 2px;
             text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        /* Navigation */
+        .nav-links {
+            display: flex;
+            gap: 25px;
+            flex: 1;
+            justify-content: flex-end;
+            margin-right: 30px;
+        }
+
+        .nav-item {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: color 0.3s;
+            position: relative;
+            white-space: nowrap;
+        }
+
+        .nav-item:hover {
+            color: var(--gold);
+        }
+
+        .nav-item::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--gold);
+            transition: width 0.3s;
+        }
+
+        .nav-item:hover::after {
+            width: 100%;
+        }
+
+        /* Sign Up Button */
+        .header-actions {
+            flex: 0 0 auto;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .signup-btn {
+            background: transparent;
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            padding: 8px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+
+        .signup-btn:hover {
+            background: var(--gold);
+            color: var(--chocolate-dark);
         }
 
         /* Main Layout */
@@ -325,8 +391,168 @@
             color: var(--gold);
         }
 
+        /* Modals */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background: #2b1b17;
+            width: 90%;
+            max-width: 700px;
+            border-radius: 20px;
+            border: 1px solid var(--gold);
+            padding: 40px;
+            position: relative;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .close-modal:hover {
+            color: #fff;
+        }
+
+        /* Carousel Styles */
+        .carousel-container {
+            text-align: center;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .slide-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--gold);
+            margin-bottom: 20px;
+        }
+
+        .slide-text {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 80%;
+            margin: 0 auto;
+        }
+
+        .carousel-controls {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin-top: 30px;
+            padding: 0 20px;
+            box-sizing: border-box;
+        }
+
+        .control-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--glass-border);
+            color: var(--gold);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .control-btn:hover {
+            background: var(--gold);
+            color: #2b1b17;
+        }
+
+        .slide-dots {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+        }
+
+        .dot.active {
+            background: var(--gold);
+        }
+
+        /* Sign Up Modal Specifics */
+        .signup-form-group {
+            margin-bottom: 20px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+        }
+
+        .checkbox-group input {
+            accent-color: var(--gold);
+            width: 18px;
+            height: 18px;
+        }
+
         /* Responsive */
         @media (max-width: 968px) {
+            header {
+                flex-direction: column;
+                gap: 20px;
+                padding: 20px;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+
+            .header-actions {
+                width: 100%;
+                justify-content: center;
+            }
+
             main {
                 grid-template-columns: 1fr;
                 padding: 40px 20px;
@@ -353,7 +579,17 @@
     <header>
         <div class="brand">
             <h1>CocoaFlow</h1>
-            <span>Real Cocoa, Real Chocolate, Real Happiness</span>
+            <span>OUR COCOA, YOUR HAPPINESS</span>
+        </div>
+        <nav class="nav-links">
+            <a class="nav-item" data-category="Sourcing">Sourcing & Quality</a>
+            <a class="nav-item" data-category="Logistics">Logistics</a>
+            <a class="nav-item" data-category="Testimonials">Testimonials</a>
+            <a class="nav-item" data-category="Sustainability">Sustainability</a>
+            <a class="nav-item" data-category="Products">Products</a>
+        </nav>
+        <div class="header-actions">
+            <button class="signup-btn" id="openSignupBtn">Sign Up</button>
         </div>
     </header>
 
@@ -367,6 +603,9 @@
                 ethically harvested, meticulously fermented, and perfectly roasted
                 to unlock deep, complex flavor profiles.
             </p>
+            <h3
+                style="color: var(--gold); font-family: 'Playfair Display', serif; font-size: 1.5rem; margin-bottom: 15px;">
+                Real Cocoa, Real Chocolate, Real Happiness</h3>
             <p>
                 Partner with us to access a supply chain built on transparency,
                 quality, and a passion for the art of chocolate.
@@ -447,6 +686,57 @@
         <p>&copy; 2024 CocoaFlow Inc. All rights reserved.</p>
     </footer>
 
+    <!-- Carousel Modal -->
+    <div id="carouselModal" class="modal-overlay">
+        <div class="modal-content glass">
+            <span class="close-modal" id="closeCarousel">&times;</span>
+            <div class="carousel-container">
+                <h3 class="slide-title" id="slideTitle">Title</h3>
+                <p class="slide-text" id="slideText">Content goes here...</p>
+
+                <div class="carousel-controls">
+                    <div class="control-btn" id="prevSlide">&#10094;</div>
+                    <div class="slide-dots" id="slideDots">
+                        <!-- Dots injected via JS -->
+                    </div>
+                    <div class="control-btn" id="nextSlide">&#10095;</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sign Up Modal -->
+    <div id="signupModal" class="modal-overlay">
+        <div class="modal-content glass" style="max-width: 500px;">
+            <span class="close-modal" id="closeSignup">&times;</span>
+            <h3
+                style="color: var(--gold); text-align: center; font-family: 'Playfair Display', serif; margin-bottom: 20px;">
+                Join Our Community</h3>
+            <p style="text-align: center; color: rgba(255,255,255,0.7); margin-bottom: 30px;">Stay updated with the
+                latest cocoa trends and exclusive offers.</p>
+
+            <form id="signupForm">
+                <div class="signup-form-group">
+                    <label for="signupEmail" style="display:block; color:var(--gold); margin-bottom:8px;">Email
+                        Address</label>
+                    <input type="email" id="signupEmail" class="form-control" required placeholder="you@example.com">
+                </div>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="promoCheck">
+                    <label for="promoCheck">Receive marketing promotions</label>
+                </div>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="newsletterCheck" checked>
+                    <label for="newsletterCheck">Subscribe to our newsletter</label>
+                </div>
+
+                <button type="submit" style="margin-top: 20px;">Sign Up Now</button>
+            </form>
+        </div>
+    </div>
+
     <script type="module">
         // Import Firebase SDKs (Modular - Matching Staff Page)
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
@@ -511,6 +801,128 @@
                 messageBox.style.display = 'block';
             }
         });
+
+        // --- Carousel Logic ---
+        const carouselData = {
+            "Sourcing": [
+                { title: "Ethical Origins", text: "We partner exclusively with cooperatives that ensure fair wages and safe working conditions for farmers." },
+                { title: "The Bean Belt", text: "Our cocoa is sourced from the prime equatorial regions of Ghana, Ecuador, and Ivory Coast." },
+                { title: "Quality Control", text: "Every batch undergoes rigorous testing for moisture content, bean size, and fermentation levels." },
+                { title: "Direct Trade", text: "By cutting out middlemen, we ensure more value goes back to the farming communities." },
+                { title: "Traceability", text: "From the farm to your factory, every bag of beans is fully traceable via our digital supply chain." }
+            ],
+            "Logistics": [
+                { title: "Global Reach", text: "We ship to over 50 countries worldwide with established routes and customs expertise." },
+                { title: "Cold Chain", text: "Temperature-controlled shipping ensures your cocoa arrives in perfect condition, preserving its flavor." },
+                { title: "Real-Time Tracking", text: "Monitor your shipment 24/7 with our advanced GPS tracking systems." },
+                { title: "Warehousing", text: "Strategic warehousing in key hubs allows for just-in-time delivery to your facilities." },
+                { title: "Customs Clearance", text: "Our dedicated team handles all import/export documentation to prevent delays." }
+            ],
+            "Testimonials": [
+                { title: "ChocoDelight Inc.", text: "\"CocoaFlow transformed our supply chain. The quality is unmatched and the service is impeccable.\"" },
+                { title: "Artisan Sweets", text: "\"Knowing exactly where our beans come from has been a game-changer for our brand story.\"" },
+                { title: "Global Confections", text: "\"Reliable, professional, and passionate. CocoaFlow is the partner we've been looking for.\"" },
+                { title: "BeanToBar Co.", text: "\"The flavor profiles of their Ecuadorian beans are simply outstanding. Highly recommended.\"" },
+                { title: "Sweet Innovations", text: "\"Their logistics team saved us during the holiday rush. We couldn't ask for a better partner.\"" }
+            ],
+            "Sustainability": [
+                { title: "Zero Deforestation", text: "We are committed to a deforestation-free supply chain, protecting vital rainforests." },
+                { title: "Carbon Neutral", text: "Our shipping operations are 100% carbon offset through reforestation projects." },
+                { title: "Water Conservation", text: "We work with farmers to implement water-smart agriculture techniques." },
+                { title: "Community Growth", text: "A portion of our profits is invested in building schools and clinics in farming regions." },
+                { title: "Eco-Packaging", text: "All our sample packaging is biodegradable and made from recycled materials." }
+            ],
+            "Products": [
+                { title: "Artisan Truffles", text: "Hand-rolled truffles made with our single-origin 70% dark chocolate and infused with local spices." },
+                { title: "Bean-to-Bar Bars", text: "Small-batch chocolate bars that highlight the unique terroir of each cocoa origin." },
+                { title: "Cocoa Nibs", text: "Roasted and crushed cocoa beans, perfect for adding a crunchy texture and intense chocolate flavor to baking." },
+                { title: "Drinking Chocolate", text: "Rich and decadent drinking chocolate mixes, available in classic, spicy, and dark varieties." },
+                { title: "Pralines", text: "Exquisite pralines with smooth hazelnut and almond fillings, coated in our signature milk chocolate." }
+            ]
+        };
+
+        let currentCategory = "";
+        let currentSlideIndex = 0;
+
+        const carouselModal = document.getElementById('carouselModal');
+        const slideTitle = document.getElementById('slideTitle');
+        const slideText = document.getElementById('slideText');
+        const slideDots = document.getElementById('slideDots');
+
+        // Open Carousel
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', () => {
+                currentCategory = item.getAttribute('data-category');
+                currentSlideIndex = 0;
+                updateSlide();
+                carouselModal.classList.add('active');
+            });
+        });
+
+        // Close Carousel
+        document.getElementById('closeCarousel').addEventListener('click', () => {
+            carouselModal.classList.remove('active');
+        });
+
+        // Navigation
+        document.getElementById('nextSlide').addEventListener('click', () => {
+            currentSlideIndex = (currentSlideIndex + 1) % 5;
+            updateSlide();
+        });
+
+        document.getElementById('prevSlide').addEventListener('click', () => {
+            currentSlideIndex = (currentSlideIndex - 1 + 5) % 5;
+            updateSlide();
+        });
+
+        function updateSlide() {
+            const data = carouselData[currentCategory][currentSlideIndex];
+            slideTitle.textContent = data.title;
+            slideText.textContent = data.text;
+
+            // Update Dots
+            slideDots.innerHTML = '';
+            for (let i = 0; i < 5; i++) {
+                const dot = document.createElement('div');
+                dot.className = `dot ${i === currentSlideIndex ? 'active' : ''}`;
+                dot.onclick = () => {
+                    currentSlideIndex = i;
+                    updateSlide();
+                };
+                slideDots.appendChild(dot);
+            }
+        }
+
+        // --- Sign Up Modal Logic ---
+        const signupModal = document.getElementById('signupModal');
+        const signupForm = document.getElementById('signupForm');
+
+        document.getElementById('openSignupBtn').addEventListener('click', () => {
+            signupModal.classList.add('active');
+        });
+
+        document.getElementById('closeSignup').addEventListener('click', () => {
+            signupModal.classList.remove('active');
+        });
+
+        signupForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('signupEmail').value;
+            const promo = document.getElementById('promoCheck').checked;
+            const newsletter = document.getElementById('newsletterCheck').checked;
+
+            console.log("Sign Up:", { email, promo, newsletter });
+            alert("Thanks for signing up! We've sent a confirmation email to " + email);
+            signupModal.classList.remove('active');
+            signupForm.reset();
+        });
+
+        // Close on outside click
+        window.onclick = (e) => {
+            if (e.target === carouselModal) carouselModal.classList.remove('active');
+            if (e.target === signupModal) signupModal.classList.remove('active');
+        };
+
     </script>
 </body>
 
