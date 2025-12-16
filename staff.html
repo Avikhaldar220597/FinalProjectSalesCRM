@@ -107,6 +107,18 @@
             font-weight: bold;
         }
 
+        .nav-link {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            margin-right: 20px;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover {
+            color: var(--gold);
+        }
+
         /* Main Dashboard */
         main {
             flex: 1;
@@ -701,6 +713,7 @@
             <h1>CocoaFlow CRM</h1>
         </div>
         <div class="user-profile">
+            <a href="insights.html" class="nav-link"><i class="fas fa-chart-line"></i> View Insights</a>
             <span>Staff Member</span>
             <div class="user-avatar">SM</div>
         </div>
@@ -1286,6 +1299,10 @@
             // Update Status if changed
             if (selectedPhase && selectedPhase !== document.getElementById('modal-lead-name').getAttribute('data-status')) {
                 updateData.status = selectedPhase;
+                // Track time to contact for Insights
+                if (selectedPhase === 'Contacted') {
+                    updateData.contactedAt = new Date();
+                }
             }
 
             // Capture Fields
