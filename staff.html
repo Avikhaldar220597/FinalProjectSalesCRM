@@ -661,453 +661,536 @@
             color: rgba(255, 255, 255, 0.5);
         }
 
-        /* Deleted Leads List */
-        .deleted-lead-item {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 10px;
+        /* Login Overlay */
+        #login-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1a1210 0%, #3e2723 100%);
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 2000;
+            transition: opacity 0.5s ease;
         }
 
-        .deleted-lead-info h5 {
-            margin: 0 0 5px 0;
-            font-size: 1rem;
-            color: #fff;
+        .login-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            padding: 40px;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+            animation: slideUp 0.6s ease-out;
         }
 
-        .deleted-lead-info p {
-            margin: 0;
-            font-size: 0.8rem;
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .login-card h2 {
+            font-family: 'Playfair Display', serif;
+            color: var(--gold);
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .login-card p {
             color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 30px;
+            font-size: 0.9rem;
         }
 
-        .deleted-actions button {
-            padding: 6px 12px;
-            border-radius: 4px;
-            border: none;
-            cursor: pointer;
+        .login-form .input-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .login-form label {
+            display: block;
+            color: var(--gold);
             font-size: 0.8rem;
-            margin-left: 5px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        .btn-restore {
-            background: var(--success);
-            color: #fff;
+        .login-form input {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            padding: 12px 15px;
+            font-size: 1rem;
         }
 
-        .btn-hard-delete {
-            background: var(--danger);
-            color: #fff;
+        .login-btn {
+            width: 100%;
+            padding: 14px;
+            background: var(--gold);
+            color: var(--chocolate-dark);
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(197, 160, 89, 0.3);
+            filter: brightness(1.1);
+        }
+
+        /* Hide dashboard initially */
+        #dashboard-content {
+            display: none;
+            flex-direction: column;
+            height: 100vh;
         }
     </style>
 </head>
 
-<body>
+<body class="login-active">
 
-    <header>
-        <div class="brand">
-            <h1>CocoaFlow CRM</h1>
-        </div>
-        <div class="user-profile">
-            <a href="insights.html" class="nav-link"><i class="fas fa-chart-line"></i> View Insights</a>
-            <span>Staff Member</span>
-            <div class="user-avatar">SM</div>
-        </div>
-    </header>
-
-    <main>
-        <div class="top-controls">
-            <div class="action-bar">
-                <div class="left-actions">
-                    <button class="filter-toggle-btn" id="toggle-filter-btn"><i class="fas fa-filter"></i> Show
-                        Filters</button>
-                    <button id="view-deleted-btn"><i class="fas fa-trash-alt"></i> Deleted Leads</button>
+    <!-- Login Overlay -->
+    <div id="login-overlay">
+        <div class="login-card">
+            <h2>Staff Login</h2>
+            <p>Please enter your credentials to access the CRM</p>
+            <div class="login-form">
+                <div class="input-group">
+                    <label>Username</label>
+                    <input type="text" id="login-username" value="staff@cocoaflow.com">
                 </div>
-                <button id="toggle-capture-btn">+ Quick Add Lead</button>
+                <div class="input-group">
+                    <label>Password</label>
+                    <input type="password" id="login-password" value="CocoaFlow123">
+                </div>
+                <button class="login-btn" id="login-submit-btn">Login to Dashboard</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="dashboard-content">
+        <header>
+            <div class="brand">
+                <h1>CocoaFlow CRM</h1>
+            </div>
+            <div class="user-profile">
+                <a href="insights.html" class="nav-link"><i class="fas fa-chart-line"></i> View Insights</a>
+                <span>Staff Member</span>
+                <div class="user-avatar">SM</div>
+            </div>
+        </header>
+
+        <main>
+            <div class="top-controls">
+                <div class="action-bar">
+                    <div class="left-actions">
+                        <button class="filter-toggle-btn" id="toggle-filter-btn"><i class="fas fa-filter"></i> Show
+                            Filters</button>
+                        <button id="view-deleted-btn"><i class="fas fa-trash-alt"></i> Deleted Leads</button>
+                    </div>
+                    <button id="toggle-capture-btn">+ Quick Add Lead</button>
+                </div>
+
+                <section id="filter-section">
+                    <div class="filter-grid">
+                        <!-- Stage Filter -->
+                        <div class="filter-group">
+                            <h4>Stage</h4>
+                            <div class="dropdown" id="dropdown-stage">
+                                <div class="dropdown-btn">Select Stages... <span>&#9662;</span></div>
+                                <div class="dropdown-content" id="filter-stage-options">
+                                    <!-- Populated by JS -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Enquiry Type Filter -->
+                        <div class="filter-group">
+                            <h4>Enquiry Type</h4>
+                            <div class="dropdown" id="dropdown-type">
+                                <div class="dropdown-btn">Select Types... <span>&#9662;</span></div>
+                                <div class="dropdown-content" id="filter-type-options">
+                                    <label class="dropdown-item"><input type="checkbox" value="Sourcing">
+                                        Sourcing</label>
+                                    <label class="dropdown-item"><input type="checkbox" value="Wholesale">
+                                        Wholesale</label>
+                                    <label class="dropdown-item"><input type="checkbox" value="Partnership">
+                                        Partnership</label>
+                                    <label class="dropdown-item"><input type="checkbox" value="Other"> Other</label>
+                                    <label class="dropdown-item"><input type="checkbox" value="Manual Entry"> Manual
+                                        Entry</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Priority Filter -->
+                        <div class="filter-group">
+                            <h4>Priority</h4>
+                            <div class="dropdown" id="dropdown-priority">
+                                <div class="dropdown-btn">Select Priority... <span>&#9662;</span></div>
+                                <div class="dropdown-content" id="filter-priority-options">
+                                    <label class="dropdown-item"><input type="checkbox" value="High"> High</label>
+                                    <label class="dropdown-item"><input type="checkbox" value="Medium"> Medium</label>
+                                    <label class="dropdown-item"><input type="checkbox" value="Low"> Low</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Final Amount Filter -->
+                        <div class="filter-group">
+                            <h4>Final Order Amount (kg)</h4>
+                            <div class="dropdown" id="dropdown-amount">
+                                <div class="dropdown-btn">Select Ranges... <span>&#9662;</span></div>
+                                <div class="dropdown-content" id="filter-amount-options">
+                                    <label class="dropdown-item"><input type="checkbox" value="0-50"> &lt; 50</label>
+                                    <label class="dropdown-item"><input type="checkbox" value="50-200"> 50 - 199</label>
+                                    <label class="dropdown-item"><input type="checkbox" value="200-500"> 200 -
+                                        499</label>
+                                    <label class="dropdown-item"><input type="checkbox" value="500-1000"> 500 -
+                                        999</label>
+                                    <label class="dropdown-item"><input type="checkbox" value="1000-inf"> &ge;
+                                        1000</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
             </div>
 
-            <section id="filter-section">
-                <div class="filter-grid">
-                    <!-- Stage Filter -->
-                    <div class="filter-group">
-                        <h4>Stage</h4>
-                        <div class="dropdown" id="dropdown-stage">
-                            <div class="dropdown-btn">Select Stages... <span>&#9662;</span></div>
-                            <div class="dropdown-content" id="filter-stage-options">
-                                <!-- Populated by JS -->
-                            </div>
-                        </div>
+            <section id="lead-capture">
+                <h2>Quick Add Lead</h2>
+                <div class="capture-form">
+                    <div class="input-group">
+                        <label>Contact Name</label>
+                        <input type="text" id="lead-name" placeholder="Jane Doe">
                     </div>
-
-                    <!-- Enquiry Type Filter -->
-                    <div class="filter-group">
-                        <h4>Enquiry Type</h4>
-                        <div class="dropdown" id="dropdown-type">
-                            <div class="dropdown-btn">Select Types... <span>&#9662;</span></div>
-                            <div class="dropdown-content" id="filter-type-options">
-                                <label class="dropdown-item"><input type="checkbox" value="Sourcing"> Sourcing</label>
-                                <label class="dropdown-item"><input type="checkbox" value="Wholesale"> Wholesale</label>
-                                <label class="dropdown-item"><input type="checkbox" value="Partnership">
-                                    Partnership</label>
-                                <label class="dropdown-item"><input type="checkbox" value="Other"> Other</label>
-                                <label class="dropdown-item"><input type="checkbox" value="Manual Entry"> Manual
-                                    Entry</label>
-                            </div>
-                        </div>
+                    <div class="input-group">
+                        <label>Email Address</label>
+                        <input type="email" id="lead-email" placeholder="jane@example.com">
                     </div>
-
-                    <!-- Priority Filter -->
-                    <div class="filter-group">
-                        <h4>Priority</h4>
-                        <div class="dropdown" id="dropdown-priority">
-                            <div class="dropdown-btn">Select Priority... <span>&#9662;</span></div>
-                            <div class="dropdown-content" id="filter-priority-options">
-                                <label class="dropdown-item"><input type="checkbox" value="High"> High</label>
-                                <label class="dropdown-item"><input type="checkbox" value="Medium"> Medium</label>
-                                <label class="dropdown-item"><input type="checkbox" value="Low"> Low</label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Final Amount Filter -->
-                    <div class="filter-group">
-                        <h4>Final Order Amount (kg)</h4>
-                        <div class="dropdown" id="dropdown-amount">
-                            <div class="dropdown-btn">Select Ranges... <span>&#9662;</span></div>
-                            <div class="dropdown-content" id="filter-amount-options">
-                                <label class="dropdown-item"><input type="checkbox" value="0-50"> &lt; 50</label>
-                                <label class="dropdown-item"><input type="checkbox" value="50-200"> 50 - 199</label>
-                                <label class="dropdown-item"><input type="checkbox" value="200-500"> 200 - 499</label>
-                                <label class="dropdown-item"><input type="checkbox" value="500-1000"> 500 - 999</label>
-                                <label class="dropdown-item"><input type="checkbox" value="1000-inf"> &ge; 1000</label>
-                            </div>
-                        </div>
-                    </div>
+                    <button id="capture-btn">Save Lead</button>
                 </div>
+                <p id="capture-message" style="margin-top: 10px; font-size: 0.9rem;"></p>
             </section>
+
+            <div id="pipeline-board">
+                <div class="loading-indicator">Loading pipeline data...</div>
+            </div>
+        </main>
+
+        <!-- Lead Detail Modal -->
+        <div id="lead-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-btn" id="close-detail-modal">&times;</span>
+
+                <div class="modal-header">
+                    <h3 id="modal-lead-name">Loading...</h3>
+                    <div class="subtitle" id="modal-lead-company">Company Name</div>
+                </div>
+
+                <!-- Read-Only Details -->
+                <div class="detail-row">
+                    <div class="detail-label">Contact Email</div>
+                    <div class="detail-value" id="modal-lead-email">email@example.com</div>
+                </div>
+
+                <div class="detail-row">
+                    <div class="detail-label">Enquiry Type</div>
+                    <div class="detail-value" id="modal-lead-type">General</div>
+                </div>
+
+                <div class="detail-row">
+                    <div class="detail-label">Message</div>
+                    <div class="detail-value" id="modal-lead-message">No message content.</div>
+                </div>
+
+                <!-- Editable Fields -->
+                <div class="editable-fields">
+                    <h4>Staff Inputs</h4>
+
+                    <div class="input-group" style="margin-bottom: 15px;">
+                        <label>Internal Notes (Always Editable)</label>
+                        <textarea id="internal-notes" rows="3" placeholder="Add notes here..."></textarea>
+                    </div>
+
+                    <div class="input-group" style="margin-bottom: 15px;">
+                        <label>Priority</label>
+                        <select id="lead-priority">
+                            <option value="Low">Low</option>
+                            <option value="Medium">Medium</option>
+                            <option value="High">High</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group" style="margin-bottom: 15px;">
+                        <label>Initial Order Amount (kg)</label>
+                        <input type="number" id="initial-order-amount" placeholder="0">
+                    </div>
+
+                    <div class="input-group">
+                        <label>Final Order Amount (kg)</label>
+                        <input type="number" id="final-order-amount" placeholder="0">
+                    </div>
+                </div>
+
+                <div class="action-area">
+                    <div class="detail-label">Move to Stage</div>
+                    <div class="phase-selector" id="phase-selector">
+                        <!-- Options injected via JS -->
+                    </div>
+
+                    <button id="save-status-btn">Update Lead</button>
+                </div>
+            </div>
         </div>
 
-        <section id="lead-capture">
-            <h2>Quick Add Lead</h2>
-            <div class="capture-form">
-                <div class="input-group">
-                    <label>Contact Name</label>
-                    <input type="text" id="lead-name" placeholder="Jane Doe">
+        <!-- Deleted Leads Modal -->
+        <div id="deleted-leads-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-btn" id="close-deleted-modal">&times;</span>
+                <div class="modal-header">
+                    <h3>Deleted Leads</h3>
+                    <div class="subtitle">Manage soft-deleted leads</div>
                 </div>
-                <div class="input-group">
-                    <label>Email Address</label>
-                    <input type="email" id="lead-email" placeholder="jane@example.com">
+                <div id="deleted-leads-list">
+                    <!-- Populated by JS -->
                 </div>
-                <button id="capture-btn">Save Lead</button>
-            </div>
-            <p id="capture-message" style="margin-top: 10px; font-size: 0.9rem;"></p>
-        </section>
-
-        <div id="pipeline-board">
-            <div class="loading-indicator">Loading pipeline data...</div>
-        </div>
-    </main>
-
-    <!-- Lead Detail Modal -->
-    <div id="lead-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" id="close-detail-modal">&times;</span>
-
-            <div class="modal-header">
-                <h3 id="modal-lead-name">Loading...</h3>
-                <div class="subtitle" id="modal-lead-company">Company Name</div>
-            </div>
-
-            <!-- Read-Only Details -->
-            <div class="detail-row">
-                <div class="detail-label">Contact Email</div>
-                <div class="detail-value" id="modal-lead-email">email@example.com</div>
-            </div>
-
-            <div class="detail-row">
-                <div class="detail-label">Enquiry Type</div>
-                <div class="detail-value" id="modal-lead-type">General</div>
-            </div>
-
-            <div class="detail-row">
-                <div class="detail-label">Message</div>
-                <div class="detail-value" id="modal-lead-message">No message content.</div>
-            </div>
-
-            <!-- Editable Fields -->
-            <div class="editable-fields">
-                <h4>Staff Inputs</h4>
-
-                <div class="input-group" style="margin-bottom: 15px;">
-                    <label>Internal Notes (Always Editable)</label>
-                    <textarea id="internal-notes" rows="3" placeholder="Add notes here..."></textarea>
-                </div>
-
-                <div class="input-group" style="margin-bottom: 15px;">
-                    <label>Priority</label>
-                    <select id="lead-priority">
-                        <option value="Low">Low</option>
-                        <option value="Medium">Medium</option>
-                        <option value="High">High</option>
-                    </select>
-                </div>
-
-                <div class="input-group" style="margin-bottom: 15px;">
-                    <label>Initial Order Amount (kg)</label>
-                    <input type="number" id="initial-order-amount" placeholder="0">
-                </div>
-
-                <div class="input-group">
-                    <label>Final Order Amount (kg)</label>
-                    <input type="number" id="final-order-amount" placeholder="0">
-                </div>
-            </div>
-
-            <div class="action-area">
-                <div class="detail-label">Move to Stage</div>
-                <div class="phase-selector" id="phase-selector">
-                    <!-- Options injected via JS -->
-                </div>
-
-                <button id="save-status-btn">Update Lead</button>
             </div>
         </div>
-    </div>
 
-    <!-- Deleted Leads Modal -->
-    <div id="deleted-leads-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" id="close-deleted-modal">&times;</span>
-            <div class="modal-header">
-                <h3>Deleted Leads</h3>
-                <div class="subtitle">Manage soft-deleted leads</div>
-            </div>
-            <div id="deleted-leads-list">
-                <!-- Populated by JS -->
-            </div>
-        </div>
-    </div>
+        <script type="module">
+            import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+            import { getFirestore, collection, addDoc, doc, updateDoc, deleteDoc, onSnapshot } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
 
-    <script type="module">
-        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
-        import { getFirestore, collection, addDoc, doc, updateDoc, deleteDoc, onSnapshot } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+            // Firebase Config
+            const firebaseConfig = {
+                apiKey: "AIzaSyA75ukzNbnVkdFhOMwRSnwvJO7yU4B_mkE",
+                authDomain: "fp-to-crm.firebaseapp.com",
+                projectId: "fp-to-crm",
+                storageBucket: "fp-to-crm.firebasestorage.app",
+                messagingSenderId: "825696080406",
+                appId: "1:825696080406:web:2929d6649baa1b58c65b37"
+            };
 
-        // Firebase Config
-        const firebaseConfig = {
-            apiKey: "AIzaSyA75ukzNbnVkdFhOMwRSnwvJO7yU4B_mkE",
-            authDomain: "fp-to-crm.firebaseapp.com",
-            projectId: "fp-to-crm",
-            storageBucket: "fp-to-crm.firebasestorage.app",
-            messagingSenderId: "825696080406",
-            appId: "1:825696080406:web:2929d6649baa1b58c65b37"
-        };
+            const app = initializeApp(firebaseConfig);
+            const db = getFirestore(app);
+            const leadsCollection = collection(db, 'leads');
 
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-        const leadsCollection = collection(db, 'leads');
+            // State
+            const phases = ["New Lead", "Contacted", "Qualified", "Proposal Sent", "Won", "Lost"];
+            let allLeads = []; // Store all leads
+            let currentLeadId = null;
+            let selectedPhase = null;
 
-        // State
-        const phases = ["New Lead", "Contacted", "Qualified", "Proposal Sent", "Won", "Lost"];
-        let allLeads = []; // Store all leads
-        let currentLeadId = null;
-        let selectedPhase = null;
+            // DOM Elements
+            const pipelineBoard = document.getElementById('pipeline-board');
+            const modal = document.getElementById('lead-modal');
+            const deletedModal = document.getElementById('deleted-leads-modal');
+            const toggleCaptureBtn = document.getElementById('toggle-capture-btn');
+            const leadCaptureSection = document.getElementById('lead-capture');
+            const toggleFilterBtn = document.getElementById('toggle-filter-btn');
+            const filterSection = document.getElementById('filter-section');
+            const viewDeletedBtn = document.getElementById('view-deleted-btn');
 
-        // DOM Elements
-        const pipelineBoard = document.getElementById('pipeline-board');
-        const modal = document.getElementById('lead-modal');
-        const deletedModal = document.getElementById('deleted-leads-modal');
-        const toggleCaptureBtn = document.getElementById('toggle-capture-btn');
-        const leadCaptureSection = document.getElementById('lead-capture');
-        const toggleFilterBtn = document.getElementById('toggle-filter-btn');
-        const filterSection = document.getElementById('filter-section');
-        const viewDeletedBtn = document.getElementById('view-deleted-btn');
+            // Input Elements
+            const internalNotesInput = document.getElementById('internal-notes');
+            const initialAmountInput = document.getElementById('initial-order-amount');
+            const finalAmountInput = document.getElementById('final-order-amount');
+            const priorityInput = document.getElementById('lead-priority');
 
-        // Input Elements
-        const internalNotesInput = document.getElementById('internal-notes');
-        const initialAmountInput = document.getElementById('initial-order-amount');
-        const finalAmountInput = document.getElementById('final-order-amount');
-        const priorityInput = document.getElementById('lead-priority');
-
-        // Initialize Filters
-        function initFilters() {
-            const stageContainer = document.getElementById('filter-stage-options');
-            phases.forEach(phase => {
-                const label = document.createElement('label');
-                label.className = 'dropdown-item';
-                label.innerHTML = `<input type="checkbox" value="${phase}"> ${phase}`;
-                stageContainer.appendChild(label);
-            });
-
-            // Dropdown Logic
-            setupDropdown('dropdown-stage', 'filter-stage-options');
-            setupDropdown('dropdown-type', 'filter-type-options');
-            setupDropdown('dropdown-priority', 'filter-priority-options');
-            setupDropdown('dropdown-amount', 'filter-amount-options');
-
-            // Add event listeners to all checkboxes for filtering
-            document.querySelectorAll('.dropdown-item input').forEach(cb => {
-                cb.addEventListener('change', () => {
-                    updateDropdownLabel(cb.closest('.dropdown'));
-                    applyFilters();
+            // Initialize Filters
+            function initFilters() {
+                const stageContainer = document.getElementById('filter-stage-options');
+                phases.forEach(phase => {
+                    const label = document.createElement('label');
+                    label.className = 'dropdown-item';
+                    label.innerHTML = `<input type="checkbox" value="${phase}"> ${phase}`;
+                    stageContainer.appendChild(label);
                 });
-            });
-        }
 
-        function setupDropdown(dropdownId, contentId) {
-            const dropdown = document.getElementById(dropdownId);
-            const btn = dropdown.querySelector('.dropdown-btn');
-            const content = document.getElementById(contentId);
+                // Dropdown Logic
+                setupDropdown('dropdown-stage', 'filter-stage-options');
+                setupDropdown('dropdown-type', 'filter-type-options');
+                setupDropdown('dropdown-priority', 'filter-priority-options');
+                setupDropdown('dropdown-amount', 'filter-amount-options');
 
-            btn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                // Close others
-                document.querySelectorAll('.dropdown-content').forEach(c => {
-                    if (c.id !== contentId) c.classList.remove('show');
+                // Add event listeners to all checkboxes for filtering
+                document.querySelectorAll('.dropdown-item input').forEach(cb => {
+                    cb.addEventListener('change', () => {
+                        updateDropdownLabel(cb.closest('.dropdown'));
+                        applyFilters();
+                    });
                 });
-                content.classList.toggle('show');
-            });
-        }
-
-        function updateDropdownLabel(dropdown) {
-            const btn = dropdown.querySelector('.dropdown-btn');
-            const checked = dropdown.querySelectorAll('input:checked');
-            if (checked.length === 0) {
-                btn.innerHTML = 'Select... <span>&#9662;</span>';
-            } else if (checked.length === 1) {
-                btn.innerHTML = `${checked[0].parentElement.textContent.trim()} <span>&#9662;</span>`;
-            } else {
-                btn.innerHTML = `${checked.length} Selected <span>&#9662;</span>`;
-            }
-        }
-
-        // Close dropdowns when clicking outside
-        window.addEventListener('click', () => {
-            document.querySelectorAll('.dropdown-content').forEach(c => c.classList.remove('show'));
-        });
-
-        initFilters();
-
-        // Toggle UI
-        toggleCaptureBtn.addEventListener('click', () => {
-            leadCaptureSection.classList.toggle('visible');
-            toggleCaptureBtn.textContent = leadCaptureSection.classList.contains('visible') ? 'Close Form' : '+ Quick Add Lead';
-        });
-
-        toggleFilterBtn.addEventListener('click', () => {
-            filterSection.classList.toggle('visible');
-            toggleFilterBtn.textContent = filterSection.classList.contains('visible') ? 'Hide Filters' : 'Show Filters';
-        });
-
-        viewDeletedBtn.addEventListener('click', () => {
-            renderDeletedLeads();
-            deletedModal.style.display = 'flex';
-        });
-
-        // Quick Add Logic
-        document.getElementById('capture-btn').addEventListener('click', async () => {
-            const name = document.getElementById('lead-name').value;
-            const email = document.getElementById('lead-email').value;
-            const msg = document.getElementById('capture-message');
-
-            if (!name || !email) {
-                msg.textContent = 'Please fill in name and email.';
-                msg.style.color = 'var(--danger)';
-                return;
             }
 
-            try {
-                await addDoc(leadsCollection, {
-                    name, email,
-                    company: 'N/A',
-                    enquiryType: 'Manual Entry',
-                    message: 'Added by staff.',
-                    status: 'New Lead',
-                    createdAt: new Date(),
-                    initialOrderAmount: null,
-                    finalOrderAmount: null,
-                    internalNotes: '',
-                    priority: 'Medium',
-                    isDeleted: false
+            function setupDropdown(dropdownId, contentId) {
+                const dropdown = document.getElementById(dropdownId);
+                const btn = dropdown.querySelector('.dropdown-btn');
+                const content = document.getElementById(contentId);
+
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    // Close others
+                    document.querySelectorAll('.dropdown-content').forEach(c => {
+                        if (c.id !== contentId) c.classList.remove('show');
+                    });
+                    content.classList.toggle('show');
                 });
-                msg.textContent = 'Lead added successfully!';
-                msg.style.color = 'var(--success)';
-                document.getElementById('lead-name').value = '';
-                document.getElementById('lead-email').value = '';
-                setTimeout(() => msg.textContent = '', 3000);
-            } catch (e) {
-                console.error(e);
-                msg.textContent = 'Error adding lead.';
             }
-        });
 
-        // Pipeline Rendering & Filtering
-        onSnapshot(leadsCollection, (snapshot) => {
-            allLeads = [];
-            snapshot.forEach(doc => allLeads.push({ id: doc.id, ...doc.data() }));
-            applyFilters(); // Re-apply filters on data update
-            if (deletedModal.style.display === 'flex') renderDeletedLeads();
-        });
+            function updateDropdownLabel(dropdown) {
+                const btn = dropdown.querySelector('.dropdown-btn');
+                const checked = dropdown.querySelectorAll('input:checked');
+                if (checked.length === 0) {
+                    btn.innerHTML = 'Select... <span>&#9662;</span>';
+                } else if (checked.length === 1) {
+                    btn.innerHTML = `${checked[0].parentElement.textContent.trim()} <span>&#9662;</span>`;
+                } else {
+                    btn.innerHTML = `${checked.length} Selected <span>&#9662;</span>`;
+                }
+            }
 
-        function applyFilters() {
-            // 1. Get Selected Values
-            const selectedStages = Array.from(document.querySelectorAll('#filter-stage-options input:checked')).map(cb => cb.value);
-            const selectedTypes = Array.from(document.querySelectorAll('#filter-type-options input:checked')).map(cb => cb.value);
-            const selectedPriorities = Array.from(document.querySelectorAll('#filter-priority-options input:checked')).map(cb => cb.value);
-            const selectedRanges = Array.from(document.querySelectorAll('#filter-amount-options input:checked')).map(cb => cb.value);
+            // Close dropdowns when clicking outside
+            window.addEventListener('click', () => {
+                document.querySelectorAll('.dropdown-content').forEach(c => c.classList.remove('show'));
+            });
 
-            // 2. Filter Logic
-            const filteredLeads = allLeads.filter(lead => {
-                // EXCLUDE DELETED LEADS
-                if (lead.isDeleted) return false;
+            initFilters();
 
-                // Stage Filter (OR)
-                if (selectedStages.length > 0 && !selectedStages.includes(lead.status)) return false;
+            // Toggle UI
+            toggleCaptureBtn.addEventListener('click', () => {
+                leadCaptureSection.classList.toggle('visible');
+                toggleCaptureBtn.textContent = leadCaptureSection.classList.contains('visible') ? 'Close Form' : '+ Quick Add Lead';
+            });
 
-                // Type Filter (OR)
-                const type = lead.enquiryType || 'Manual Entry';
-                if (selectedTypes.length > 0 && !selectedTypes.includes(type)) return false;
+            toggleFilterBtn.addEventListener('click', () => {
+                filterSection.classList.toggle('visible');
+                toggleFilterBtn.textContent = filterSection.classList.contains('visible') ? 'Hide Filters' : 'Show Filters';
+            });
 
-                // Priority Filter (OR)
-                const priority = lead.priority || 'Medium';
-                if (selectedPriorities.length > 0 && !selectedPriorities.includes(priority)) return false;
+            viewDeletedBtn.addEventListener('click', () => {
+                renderDeletedLeads();
+                deletedModal.style.display = 'flex';
+            });
 
-                // Amount Filter (OR)
-                if (selectedRanges.length > 0) {
-                    const amount = lead.finalOrderAmount || 0;
-                    let amountMatch = false;
+            // Quick Add Logic
+            document.getElementById('capture-btn').addEventListener('click', async () => {
+                const name = document.getElementById('lead-name').value;
+                const email = document.getElementById('lead-email').value;
+                const msg = document.getElementById('capture-message');
 
-                    for (const range of selectedRanges) {
-                        if (range === '0-50' && amount < 50) amountMatch = true;
-                        if (range === '50-200' && amount >= 50 && amount < 200) amountMatch = true;
-                        if (range === '200-500' && amount >= 200 && amount < 500) amountMatch = true;
-                        if (range === '500-1000' && amount >= 500 && amount < 1000) amountMatch = true;
-                        if (range === '1000-inf' && amount >= 1000) amountMatch = true;
-                    }
-
-                    if (!amountMatch) return false;
+                if (!name || !email) {
+                    msg.textContent = 'Please fill in name and email.';
+                    msg.style.color = 'var(--danger)';
+                    return;
                 }
 
-                return true;
+                try {
+                    await addDoc(leadsCollection, {
+                        name, email,
+                        company: 'N/A',
+                        enquiryType: 'Manual Entry',
+                        message: 'Added by staff.',
+                        status: 'New Lead',
+                        createdAt: new Date(),
+                        initialOrderAmount: null,
+                        finalOrderAmount: null,
+                        internalNotes: '',
+                        priority: 'Medium',
+                        isDeleted: false
+                    });
+                    msg.textContent = 'Lead added successfully!';
+                    msg.style.color = 'var(--success)';
+                    document.getElementById('lead-name').value = '';
+                    document.getElementById('lead-email').value = '';
+                    setTimeout(() => msg.textContent = '', 3000);
+                } catch (e) {
+                    console.error(e);
+                    msg.textContent = 'Error adding lead.';
+                }
             });
 
-            renderBoard(filteredLeads);
-        }
+            // Pipeline Rendering & Filtering
+            onSnapshot(leadsCollection, (snapshot) => {
+                allLeads = [];
+                snapshot.forEach(doc => allLeads.push({ id: doc.id, ...doc.data() }));
+                applyFilters(); // Re-apply filters on data update
+                if (deletedModal.style.display === 'flex') renderDeletedLeads();
+            });
 
-        function renderBoard(leads) {
-            pipelineBoard.innerHTML = '';
+            function applyFilters() {
+                // 1. Get Selected Values
+                const selectedStages = Array.from(document.querySelectorAll('#filter-stage-options input:checked')).map(cb => cb.value);
+                const selectedTypes = Array.from(document.querySelectorAll('#filter-type-options input:checked')).map(cb => cb.value);
+                const selectedPriorities = Array.from(document.querySelectorAll('#filter-priority-options input:checked')).map(cb => cb.value);
+                const selectedRanges = Array.from(document.querySelectorAll('#filter-amount-options input:checked')).map(cb => cb.value);
 
-            phases.forEach(phase => {
-                const col = document.createElement('div');
-                col.className = 'pipeline-column';
+                // 2. Filter Logic
+                const filteredLeads = allLeads.filter(lead => {
+                    // EXCLUDE DELETED LEADS
+                    if (lead.isDeleted) return false;
 
-                // Filter leads for this phase
-                const phaseLeads = leads.filter(l => l.status === phase);
+                    // Stage Filter (OR)
+                    if (selectedStages.length > 0 && !selectedStages.includes(lead.status)) return false;
 
-                col.innerHTML = `
+                    // Type Filter (OR)
+                    const type = lead.enquiryType || 'Manual Entry';
+                    if (selectedTypes.length > 0 && !selectedTypes.includes(type)) return false;
+
+                    // Priority Filter (OR)
+                    const priority = lead.priority || 'Medium';
+                    if (selectedPriorities.length > 0 && !selectedPriorities.includes(priority)) return false;
+
+                    // Amount Filter (OR)
+                    if (selectedRanges.length > 0) {
+                        const amount = lead.finalOrderAmount || 0;
+                        let amountMatch = false;
+
+                        for (const range of selectedRanges) {
+                            if (range === '0-50' && amount < 50) amountMatch = true;
+                            if (range === '50-200' && amount >= 50 && amount < 200) amountMatch = true;
+                            if (range === '200-500' && amount >= 200 && amount < 500) amountMatch = true;
+                            if (range === '500-1000' && amount >= 500 && amount < 1000) amountMatch = true;
+                            if (range === '1000-inf' && amount >= 1000) amountMatch = true;
+                        }
+
+                        if (!amountMatch) return false;
+                    }
+
+                    return true;
+                });
+
+                renderBoard(filteredLeads);
+            }
+
+            function renderBoard(leads) {
+                pipelineBoard.innerHTML = '';
+
+                phases.forEach(phase => {
+                    const col = document.createElement('div');
+                    col.className = 'pipeline-column';
+
+                    // Filter leads for this phase
+                    const phaseLeads = leads.filter(l => l.status === phase);
+
+                    col.innerHTML = `
                     <div class="column-header">
                         ${phase}
                         <span class="column-count">${phaseLeads.length}</span>
@@ -1115,31 +1198,31 @@
                     <div class="card-container" id="col-${phase.replace(/\s/g, '-')}"></div>
                 `;
 
-                pipelineBoard.appendChild(col);
+                    pipelineBoard.appendChild(col);
 
-                const container = col.querySelector('.card-container');
-                phaseLeads.forEach(lead => {
-                    container.appendChild(createCard(lead));
+                    const container = col.querySelector('.card-container');
+                    phaseLeads.forEach(lead => {
+                        container.appendChild(createCard(lead));
+                    });
                 });
-            });
-        }
-
-        function createCard(lead) {
-            const card = document.createElement('div');
-            card.className = `lead-card status-${lead.status.replace(/\s/g, '-')}`;
-
-            const company = lead.company && lead.company !== 'N/A' ? lead.company : 'Individual';
-            const type = lead.enquiryType || 'General';
-            const priority = lead.priority || 'Medium';
-
-            let amountDisplay = '';
-            if (lead.finalOrderAmount) {
-                amountDisplay = `<span>Final: ${lead.finalOrderAmount}kg</span>`;
-            } else if (lead.initialOrderAmount) {
-                amountDisplay = `<span>Init: ${lead.initialOrderAmount}kg</span>`;
             }
 
-            card.innerHTML = `
+            function createCard(lead) {
+                const card = document.createElement('div');
+                card.className = `lead-card status-${lead.status.replace(/\s/g, '-')}`;
+
+                const company = lead.company && lead.company !== 'N/A' ? lead.company : 'Individual';
+                const type = lead.enquiryType || 'General';
+                const priority = lead.priority || 'Medium';
+
+                let amountDisplay = '';
+                if (lead.finalOrderAmount) {
+                    amountDisplay = `<span>Final: ${lead.finalOrderAmount}kg</span>`;
+                } else if (lead.initialOrderAmount) {
+                    amountDisplay = `<span>Init: ${lead.initialOrderAmount}kg</span>`;
+                }
+
+                card.innerHTML = `
                 <div class="card-priority priority-${priority}" title="Priority: ${priority}"></div>
                 <div class="card-delete-btn" title="Delete Lead"><i class="fas fa-trash"></i></div>
                 <span class="card-tag">${type}</span>
@@ -1151,49 +1234,49 @@
                 </div>
             `;
 
-            // Card Click (Open Modal)
-            card.addEventListener('click', (e) => {
-                if (!e.target.closest('.card-delete-btn')) {
-                    openModal(lead);
-                }
-            });
+                // Card Click (Open Modal)
+                card.addEventListener('click', (e) => {
+                    if (!e.target.closest('.card-delete-btn')) {
+                        openModal(lead);
+                    }
+                });
 
-            // Delete Click
-            const deleteBtn = card.querySelector('.card-delete-btn');
-            deleteBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                if (confirm('Are you sure you want to delete this lead?')) {
-                    softDeleteLead(lead.id);
-                }
-            });
+                // Delete Click
+                const deleteBtn = card.querySelector('.card-delete-btn');
+                deleteBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    if (confirm('Are you sure you want to delete this lead?')) {
+                        softDeleteLead(lead.id);
+                    }
+                });
 
-            return card;
-        }
-
-        async function softDeleteLead(id) {
-            try {
-                await updateDoc(doc(db, 'leads', id), { isDeleted: true });
-            } catch (e) {
-                console.error(e);
-                alert('Error deleting lead');
-            }
-        }
-
-        function renderDeletedLeads() {
-            const list = document.getElementById('deleted-leads-list');
-            list.innerHTML = '';
-
-            const deletedLeads = allLeads.filter(l => l.isDeleted);
-
-            if (deletedLeads.length === 0) {
-                list.innerHTML = '<p style="text-align:center; color:rgba(255,255,255,0.5)">No deleted leads found.</p>';
-                return;
+                return card;
             }
 
-            deletedLeads.forEach(lead => {
-                const item = document.createElement('div');
-                item.className = 'deleted-lead-item';
-                item.innerHTML = `
+            async function softDeleteLead(id) {
+                try {
+                    await updateDoc(doc(db, 'leads', id), { isDeleted: true });
+                } catch (e) {
+                    console.error(e);
+                    alert('Error deleting lead');
+                }
+            }
+
+            function renderDeletedLeads() {
+                const list = document.getElementById('deleted-leads-list');
+                list.innerHTML = '';
+
+                const deletedLeads = allLeads.filter(l => l.isDeleted);
+
+                if (deletedLeads.length === 0) {
+                    list.innerHTML = '<p style="text-align:center; color:rgba(255,255,255,0.5)">No deleted leads found.</p>';
+                    return;
+                }
+
+                deletedLeads.forEach(lead => {
+                    const item = document.createElement('div');
+                    item.className = 'deleted-lead-item';
+                    item.innerHTML = `
                     <div class="deleted-lead-info">
                         <h5>${lead.name} (${lead.company || 'N/A'})</h5>
                         <p>Stage: ${lead.status} | Type: ${lead.enquiryType}</p>
@@ -1203,140 +1286,158 @@
                         <button class="btn-hard-delete" onclick="window.hardDeleteLead('${lead.id}')">Delete Forever</button>
                     </div>
                 `;
-                list.appendChild(item);
-            });
-        }
-
-        // Expose functions to window for inline onclicks
-        window.restoreLead = async (id) => {
-            try {
-                await updateDoc(doc(db, 'leads', id), { isDeleted: false });
-            } catch (e) {
-                console.error(e);
-                alert('Error restoring lead');
-            }
-        };
-
-        window.hardDeleteLead = async (id) => {
-            if (confirm('If deleted, lead cannot be retrieved. Are you sure?')) {
-                try {
-                    await deleteDoc(doc(db, 'leads', id));
-                } catch (e) {
-                    console.error(e);
-                    alert('Error permanently deleting lead');
-                }
-            }
-        };
-
-        // Modal Logic
-        function openModal(lead) {
-            currentLeadId = lead.id;
-            selectedPhase = lead.status;
-
-            // Populate Read-Only Fields
-            document.getElementById('modal-lead-name').textContent = lead.name;
-            document.getElementById('modal-lead-company').textContent = lead.company || 'No Company Provided';
-            document.getElementById('modal-lead-email').textContent = lead.email;
-            document.getElementById('modal-lead-type').textContent = lead.enquiryType || 'General';
-            document.getElementById('modal-lead-message').textContent = lead.message || 'No message provided.';
-
-            // Populate Editable Fields
-            internalNotesInput.value = lead.internalNotes || '';
-            initialAmountInput.value = lead.initialOrderAmount || '';
-            finalAmountInput.value = lead.finalOrderAmount || '';
-            priorityInput.value = lead.priority || 'Medium';
-
-            // Editability Logic
-            const isTerminal = (lead.status === 'Won' || lead.status === 'Lost');
-
-            // Internal Notes: Always editable
-            internalNotesInput.disabled = false;
-
-            // Amounts & Priority: Editable only if NOT Won/Lost
-            initialAmountInput.disabled = isTerminal;
-            finalAmountInput.disabled = isTerminal;
-            priorityInput.disabled = isTerminal;
-
-            // Phase Selection Logic
-            const selector = document.getElementById('phase-selector');
-            selector.innerHTML = '';
-
-            // Determine allowed moves
-            let allowed = [];
-            const s = lead.status;
-
-            if (s === 'New Lead') allowed = ['Contacted', 'Lost'];
-            else if (s === 'Contacted') allowed = ['Qualified', 'Lost'];
-            else if (s === 'Qualified') allowed = ['Proposal Sent', 'Lost'];
-            else if (s === 'Proposal Sent') allowed = ['Won', 'Lost'];
-            else allowed = [];
-
-            if (allowed.length === 0) {
-                selector.innerHTML = '<span style="color:rgba(255,255,255,0.5)">Terminal Stage (Status Locked)</span>';
-            } else {
-                allowed.forEach(p => {
-                    const btn = document.createElement('div');
-                    btn.className = 'phase-option';
-                    btn.textContent = p;
-                    btn.onclick = () => {
-                        document.querySelectorAll('.phase-option').forEach(b => b.classList.remove('selected'));
-                        btn.classList.add('selected');
-                        selectedPhase = p;
-                    };
-                    selector.appendChild(btn);
+                    list.appendChild(item);
                 });
             }
 
-            modal.style.display = 'flex';
-        }
-
-        // Save Status & Data
-        document.getElementById('save-status-btn').addEventListener('click', async () => {
-            if (!currentLeadId) return;
-
-            const updateData = {};
-
-            // Update Status if changed
-            if (selectedPhase && selectedPhase !== document.getElementById('modal-lead-name').getAttribute('data-status')) {
-                updateData.status = selectedPhase;
-                // Track time to contact for Insights
-                if (selectedPhase === 'Contacted') {
-                    updateData.contactedAt = new Date();
+            // Expose functions to window for inline onclicks
+            window.restoreLead = async (id) => {
+                try {
+                    await updateDoc(doc(db, 'leads', id), { isDeleted: false });
+                } catch (e) {
+                    console.error(e);
+                    alert('Error restoring lead');
                 }
+            };
+
+            window.hardDeleteLead = async (id) => {
+                if (confirm('If deleted, lead cannot be retrieved. Are you sure?')) {
+                    try {
+                        await deleteDoc(doc(db, 'leads', id));
+                    } catch (e) {
+                        console.error(e);
+                        alert('Error permanently deleting lead');
+                    }
+                }
+            };
+
+            // Modal Logic
+            function openModal(lead) {
+                currentLeadId = lead.id;
+                selectedPhase = lead.status;
+
+                // Populate Read-Only Fields
+                document.getElementById('modal-lead-name').textContent = lead.name;
+                document.getElementById('modal-lead-company').textContent = lead.company || 'No Company Provided';
+                document.getElementById('modal-lead-email').textContent = lead.email;
+                document.getElementById('modal-lead-type').textContent = lead.enquiryType || 'General';
+                document.getElementById('modal-lead-message').textContent = lead.message || 'No message provided.';
+
+                // Populate Editable Fields
+                internalNotesInput.value = lead.internalNotes || '';
+                initialAmountInput.value = lead.initialOrderAmount || '';
+                finalAmountInput.value = lead.finalOrderAmount || '';
+                priorityInput.value = lead.priority || 'Medium';
+
+                // Editability Logic
+                const isTerminal = (lead.status === 'Won' || lead.status === 'Lost');
+
+                // Internal Notes: Always editable
+                internalNotesInput.disabled = false;
+
+                // Amounts & Priority: Editable only if NOT Won/Lost
+                initialAmountInput.disabled = isTerminal;
+                finalAmountInput.disabled = isTerminal;
+                priorityInput.disabled = isTerminal;
+
+                // Phase Selection Logic
+                const selector = document.getElementById('phase-selector');
+                selector.innerHTML = '';
+
+                // Determine allowed moves
+                let allowed = [];
+                const s = lead.status;
+
+                if (s === 'New Lead') allowed = ['Contacted', 'Lost'];
+                else if (s === 'Contacted') allowed = ['Qualified', 'Lost'];
+                else if (s === 'Qualified') allowed = ['Proposal Sent', 'Lost'];
+                else if (s === 'Proposal Sent') allowed = ['Won', 'Lost'];
+                else allowed = [];
+
+                if (allowed.length === 0) {
+                    selector.innerHTML = '<span style="color:rgba(255,255,255,0.5)">Terminal Stage (Status Locked)</span>';
+                } else {
+                    allowed.forEach(p => {
+                        const btn = document.createElement('div');
+                        btn.className = 'phase-option';
+                        btn.textContent = p;
+                        btn.onclick = () => {
+                            document.querySelectorAll('.phase-option').forEach(b => b.classList.remove('selected'));
+                            btn.classList.add('selected');
+                            selectedPhase = p;
+                        };
+                        selector.appendChild(btn);
+                    });
+                }
+
+                modal.style.display = 'flex';
             }
 
-            // Capture Fields
-            updateData.internalNotes = internalNotesInput.value;
+            // Save Status & Data
+            document.getElementById('save-status-btn').addEventListener('click', async () => {
+                if (!currentLeadId) return;
 
-            if (!initialAmountInput.disabled) {
-                updateData.initialOrderAmount = initialAmountInput.value ? parseFloat(initialAmountInput.value) : null;
-            }
-            if (!finalAmountInput.disabled) {
-                updateData.finalOrderAmount = finalAmountInput.value ? parseFloat(finalAmountInput.value) : null;
-            }
-            if (!priorityInput.disabled) {
-                updateData.priority = priorityInput.value;
-            }
+                const updateData = {};
 
-            try {
-                await updateDoc(doc(db, 'leads', currentLeadId), updateData);
-                modal.style.display = 'none';
-            } catch (e) {
-                console.error(e);
-                alert('Error updating lead data');
-            }
-        });
+                // Update Status if changed
+                if (selectedPhase && selectedPhase !== document.getElementById('modal-lead-name').getAttribute('data-status')) {
+                    updateData.status = selectedPhase;
+                    // Track time to contact for Insights
+                    if (selectedPhase === 'Contacted') {
+                        updateData.contactedAt = new Date();
+                    }
+                }
 
-        // Close Modals
-        document.getElementById('close-detail-modal').addEventListener('click', () => modal.style.display = 'none');
-        document.getElementById('close-deleted-modal').addEventListener('click', () => deletedModal.style.display = 'none');
+                // Capture Fields
+                updateData.internalNotes = internalNotesInput.value;
 
-        window.onclick = (e) => {
-            if (e.target === modal) modal.style.display = 'none';
-            if (e.target === deletedModal) deletedModal.style.display = 'none';
-        };
+                if (!initialAmountInput.disabled) {
+                    updateData.initialOrderAmount = initialAmountInput.value ? parseFloat(initialAmountInput.value) : null;
+                }
+                if (!finalAmountInput.disabled) {
+                    updateData.finalOrderAmount = finalAmountInput.value ? parseFloat(finalAmountInput.value) : null;
+                }
+                if (!priorityInput.disabled) {
+                    updateData.priority = priorityInput.value;
+                }
 
-    </script>
+                try {
+                    await updateDoc(doc(db, 'leads', currentLeadId), updateData);
+                    modal.style.display = 'none';
+                } catch (e) {
+                    console.error(e);
+                    alert('Error updating lead data');
+                }
+            });
+
+            // Close Modals
+            document.getElementById('close-detail-modal').addEventListener('click', () => modal.style.display = 'none');
+            document.getElementById('close-deleted-modal').addEventListener('click', () => deletedModal.style.display = 'none');
+
+            window.onclick = (e) => {
+                if (e.target === modal) modal.style.display = 'none';
+                if (e.target === deletedModal) deletedModal.style.display = 'none';
+            };
+        </script>
+        <script>
+            // Login Logic
+            document.getElementById('login-submit-btn').addEventListener('click', function () {
+                const user = document.getElementById('login-username').value;
+                const pass = document.getElementById('login-password').value;
+
+                if (user === 'staff@cocoaflow.com' && pass === 'CocoaFlow123') {
+                    const overlay = document.getElementById('login-overlay');
+                    overlay.style.opacity = '0';
+                    setTimeout(() => {
+                        overlay.style.display = 'none';
+                        document.getElementById('dashboard-content').style.display = 'flex';
+                        document.body.classList.remove('login-active');
+                    }, 500);
+                } else {
+                    alert('Invalid credentials. Please try again.');
+                }
+            });
+        </script>
 </body>
 
 </html>
